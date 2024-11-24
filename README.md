@@ -1,6 +1,6 @@
 # Raytracing-SDL
 
-Raytracing-SDL is a implementation of Peter Shirley's Ray Tracing in One Weekend with rendering directly to a window GUI via SDL2.
+Raytracing-SDL is a implementation of Peter Shirley's Ray Tracing in One Weekend rendering directly to a window GUI via SDL2.
 
 Peter Shirley's Ray Tracing in One Weekend - Book Series -> https://raytracing.github.io/
 
