@@ -4,7 +4,7 @@ Raytracing-SDL is a implementation of Peter Shirley's Ray Tracing in One Weekend
 
 Peter Shirley's Ray Tracing in One Weekend - Book Series -> https://raytracing.github.io/
 
-![](assets/20241124_205514_raytracingSDL_demo.gif)
+![](assets/20241124_211423_raytracingSDL_demo.gif)
 
 *GIF is 9x faster then the actual render time.*
 
