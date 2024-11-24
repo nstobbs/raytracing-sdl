@@ -9,7 +9,7 @@
 
 const int HEIGHT = 200;
 const int WIDTH = 300;
-const int THREADS_NUM = 10;
+const int THREADS_NUM = 8;
 
 SDL_Window* window = NULL;
 SDL_Texture* framebufferTexture = NULL;
@@ -32,7 +32,7 @@ SDL_Texture* CopyFramebufferToTexture(std::vector<std::vector<color_uint8>> fram
     SDL_Surface* loadedSurface = SDL_GetWindowSurface(window);
     if(loadedSurface == NULL)
     {
-        printf("SDL_IMG_Load Failed on import: %s\n", IMG_GetError());
+        printf("Failed to GetWindowSurface: %s\n", IMG_GetError());
     }
     else
     {
@@ -58,6 +58,7 @@ SDL_Texture* CopyFramebufferToTexture(std::vector<std::vector<color_uint8>> fram
 bool LoadFramebufferTexture(std::vector<std::vector<color_uint8>> frameBuffer) // I should remove this function
 {
     bool success = true;
+    SDL_DestroyTexture(framebufferTexture);
     framebufferTexture = CopyFramebufferToTexture(frameBuffer);
     if(framebufferTexture == NULL)
     {
@@ -77,7 +78,7 @@ void close()
 
 int main(int argc, char* args[])
 {
-    // Prep CPU Render
+    // Initialize Camera and Build World
     camera cam;
     cam.imagePlaneWidth = WIDTH;
     cam.imagePlaneHeight = HEIGHT;
@@ -95,7 +96,7 @@ int main(int argc, char* args[])
     hittable_list world = createWorld();
     cam.initializeCamera();
 
-    // CPU Rendering to Framebuffer
+    // Start CPU Render to Framebuffer
     std::vector<std::vector<color_uint8>> framebuffer;
     createBlank2DVectorColor(framebuffer, WIDTH, HEIGHT);
     render(framebuffer, cam, world, WIDTH, HEIGHT, THREADS_NUM);
@@ -108,7 +109,7 @@ int main(int argc, char* args[])
     }
     else
     {
-        window = SDL_CreateWindow("raytracing-SDL2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow("Raytracing-SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
         if (window == NULL)
         {
             printf("SDL WINDOW ERROR: %s\n", SDL_GetError());
@@ -134,7 +135,7 @@ int main(int argc, char* args[])
             return 3;
         }
 
-        // Windows Event Loop 🤢
+        // Window Event Loop
         bool quit = false;
         SDL_Event e;
         while(!quit)
