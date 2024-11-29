@@ -15,6 +15,12 @@ SDL_Window* window = NULL;
 SDL_Texture* framebufferTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
 
+#if defined(__APPLE__)
+Uint32 rFLAGS = SDL_RENDERER_SOFTWARE;
+#elif _WIN32
+Uint32 rFLAGS = SDL_RENDERER_ACCELERATED;
+#endif
+
 void SetPixel(SDL_Surface* surface, int x, int y, uint8_t r, uint8_t g, uint8_t b)
 {
     SDL_LockSurface(surface);
@@ -115,7 +121,7 @@ int main(int argc, char* args[])
             printf("SDL WINDOW ERROR: %s\n", SDL_GetError());
             return 2;
         }
-        gRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        gRenderer = SDL_CreateRenderer(window, -1, rFLAGS);
         if (gRenderer == NULL)
         {
             printf("SDL RENDERER ERROR: %s\n", SDL_GetError());
